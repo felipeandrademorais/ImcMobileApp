@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView, TextInput, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
 import Button from '../../components/Button';
-import RowImc from '../../components/RowImc';
 
 import { 
   Container,
@@ -12,13 +12,16 @@ import {
   CenterScreen,
   BottonScreen,
   CircleContainer,
+  ContainerTextInput,
+  InputText,
+  TextMeasure
 } from './styles';
 
 
 
 // import api from '../../api';
 
-const Pesoalvo = () => {
+const Imc = () => {
   useEffect(() => {
     // async function teste() {
     //   const response = await api.get('/test');
@@ -30,52 +33,36 @@ const Pesoalvo = () => {
 
   }, [])
 
+  const navigation = useNavigation();
+
   return (
     <Container>
-      <View>
+      <Header>
+        <HeaderText>IMC</HeaderText>
+      </Header>
 
-        <Header>
-          <HeaderText>MEU IMC</HeaderText>
-        </Header>
-        
-        <CenterScreen>
-          <Button 
-            text={'CADASTRAR PESO-ALVO'}
-            backgroundColor={'#26E472'}
-            fontSize={20}
+      <CenterScreen>
+        <ContainerTextInput>
+          <InputText 
+            placeholder='Peso alvo...'
           />
-          
-          <CircleContainer>
-            <Circle 
-              borderColor={'#26E472'}
-              sizeCircle={'147'}
-              bottonText={'IMC'}
-            />
-            <Circle 
-              borderColor={'#26C2E4'}
-              sizeCircle={'147'}
-              bottonText={'peso(kg)'}
-            />
-          </CircleContainer>
-  
-          <Button 
-            text={'CADASTRAR'}
-            backgroundColor={'#26C2E4'}
-            fontSize={24}
-          />
-        </CenterScreen>
-        
-          
-        <BottonScreen>
-            <RowImc />
-            <RowImc />
-            <RowImc />
-            <RowImc />
-            <RowImc />
-        </BottonScreen>
-      </View>
+          <TextMeasure>(kg)</TextMeasure>
+        </ContainerTextInput>
+      </CenterScreen>
+
+      <BottonScreen>
+        <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
+          <Text>Cancelar</Text>
+        </TouchableOpacity>
+        <Button 
+          navigate={'Dashboard'}
+          text={'SALVAR'}
+          backgroundColor={'#26C2E4'}
+          fontSize={20}
+        />
+      </BottonScreen>
     </Container>
   );
 };
 
-export default Pesoalvo;
+export default Imc;

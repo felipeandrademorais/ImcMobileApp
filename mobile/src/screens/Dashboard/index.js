@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
 import Button from '../../components/Button';
@@ -19,16 +20,17 @@ import {
 // import api from '../../api';
 
 const Dashboard = () => {
-  useEffect(() => {
-    // async function teste() {
-    //   const response = await api.get('/test');
+  // useEffect(() => {
+  //   async function teste() {
+  //     const response = await api.get('/test');
 
-    //   console.log('response: ', response);
-    // }
+  //     console.log('response: ', response);
+  //   }
 
-    // teste();
+  // }, [])
 
-  }, [])
+  
+  const navigation = useNavigation();
 
   return (
     <Container>
@@ -40,6 +42,7 @@ const Dashboard = () => {
         
         <CenterScreen>
           <Button 
+            navigate={'Pesoalvo'}
             text={'CADASTRAR PESO-ALVO'}
             backgroundColor={'#26E472'}
             fontSize={20}
@@ -59,6 +62,7 @@ const Dashboard = () => {
           </CircleContainer>
   
           <Button 
+            navigate={'Imc'}
             text={'CADASTRAR'}
             backgroundColor={'#26C2E4'}
             fontSize={24}
