@@ -18,7 +18,7 @@ import {
 
 // import api from '../../api';
 
-const Dashboard = () => {
+const Pesoalvo = () => {
   useEffect(() => {
     // async function teste() {
     //   const response = await api.get('/test');
@@ -78,4 +78,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Pesoalvo;
