@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
-//import RowImc from '../../components/RowImc';
+import RowImc from '../../components/RowImc';
 import api from '../../api';
 
 import { 
@@ -26,8 +26,6 @@ const Dashboard = () => {
     async function getRegistros() {
       const response = await api.get('registro');
       setRegistros(response.data);
-
-      console.log(registros);
     }
 
     getRegistros();
@@ -83,9 +81,14 @@ const Dashboard = () => {
         
           
         <BottonScreen>
-          {/* {registros.map(registro => (
-            <RowImc registro={registro}/>
-          ))} */}
+          {registros.map(registro => {
+            return(
+              <RowImc 
+                key={registro.id}
+                registro={registro} 
+              />
+            )
+          })}
         </BottonScreen>
       </View>
     </Container>
