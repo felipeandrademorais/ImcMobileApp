@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TextInput, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, ScrollView, TextInput, Text, TouchableOpacity, Alert  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
-import Button from '../../components/Button';
+import api from '../../api';
 
 import { 
   Container,
@@ -14,32 +14,24 @@ import {
   CircleContainer,
   ContainerTextInput,
   InputText,
-  TextMeasure
+  TextMeasure,
+  Button,
+  ButtonText
 } from './styles';
 
 
-
-// import api from '../../api';
-
 const Imc = () => {
 
-  const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
 
-  const handleWeight = (e) => {
-    setWeight(e.currentTarget.value);
-  }
-
-  const handleHeight = (e) => {
-    setHeight(e.currentTarget.value);
-  }
-
-  const handleSendData = (e) => {
-    console.log(e);
-    // const response = await api.post('/registro', {
-    //   "peso": weight,
-    //   "altura": height
-    // });
+  const handleSendData = async () => {
+    const response = await api.post('registro', {
+      "peso": weight, 
+      "altura": height
+    });
+  
+    console.log('response: ', response);
   }
 
   const navigation = useNavigation();
@@ -62,8 +54,9 @@ const Imc = () => {
         <ContainerTextInput>
           <InputText 
             placeholder='Seu peso...'
-            keyboardType='number-pad' 
-            onChange={handleWeight}
+            //keyboardType='numeric' 
+            onChangeText={weight => setWeight(weight)}
+            value={weight}
           />
           <TextMeasure>(kg)</TextMeasure>
         </ContainerTextInput>
@@ -71,8 +64,9 @@ const Imc = () => {
         <ContainerTextInput>
           <InputText 
             placeholder='Sua altura...'
-            keyboardType='number-pad'
-            onChange={handleHeight}
+            //keyboardType='numeric'
+            onChangeText={height => setHeight(height)}
+            value={height}
           />
           <TextMeasure>(m)</TextMeasure>
         </ContainerTextInput>
@@ -82,12 +76,17 @@ const Imc = () => {
         <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
           <Text>Cancelar</Text>
         </TouchableOpacity>
-        <Button 
-          onPress={() => this.handleSendData}
-          text={'SALVAR'}
-          backgroundColor={'#26C2E4'}
-          fontSize={20}
-        />
+        <Button
+            backgroundColor={'#26C2E4'}
+            title="Salvar"
+          >
+            <ButtonText
+              fontSize={20}
+              onPress={handleSendData}
+            >
+              SALVAR
+            </ButtonText>
+        </Button>    
       </BottonScreen>
     </Container>
   );

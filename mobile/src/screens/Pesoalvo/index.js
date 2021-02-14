@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import Circle from '../../components/Circle';
-import Button from '../../components/Button';
+import api from '../../api';
 
 import { 
   Container,
@@ -11,29 +10,26 @@ import {
   HeaderText,
   CenterScreen,
   BottonScreen,
-  CircleContainer,
   ContainerTextInput,
   InputText,
-  TextMeasure
+  TextMeasure,
+  Button,
+  ButtonText
 } from './styles';
 
 
-
-// import api from '../../api';
-
 const Imc = () => {
-  useEffect(() => {
-    // async function teste() {
-    //   const response = await api.get('/test');
-
-    //   console.log('response: ', response);
-    // }
-
-    // teste();
-
-  }, [])
-
+  
+  const [weight, setWeight] = useState('');
   const navigation = useNavigation();
+
+  const handleSendData = async () => {
+    const response = await api.post('peso-alvo', {
+      "peso": weight, 
+    });
+  
+    console.log('response: ', response);
+  }
 
   return (
     <Container>
@@ -45,6 +41,8 @@ const Imc = () => {
         <ContainerTextInput>
           <InputText 
             placeholder='Peso alvo...'
+            onChangeText={weight => setWeight(weight)}
+            value={weight}
           />
           <TextMeasure>(kg)</TextMeasure>
         </ContainerTextInput>
@@ -54,12 +52,17 @@ const Imc = () => {
         <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
           <Text>Cancelar</Text>
         </TouchableOpacity>
-        <Button 
-          navigate={'Dashboard'}
-          text={'SALVAR'}
-          backgroundColor={'#26C2E4'}
-          fontSize={20}
-        />
+        <Button
+            backgroundColor={'#26C2E4'}
+            title="Salvar"
+          >
+            <ButtonText
+              fontSize={20}
+              onPress={handleSendData}
+            >
+              SALVAR
+            </ButtonText>
+        </Button>    
       </BottonScreen>
     </Container>
   );

@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
-import Button from '../../components/Button';
-import RowImc from '../../components/RowImc';
+//import RowImc from '../../components/RowImc';
+import api from '../../api';
 
 import { 
   Container,
@@ -13,69 +13,79 @@ import {
   CenterScreen,
   BottonScreen,
   CircleContainer,
+  Button,
+  ButtonText
 } from './styles';
 
 
-
-// import api from '../../api';
-
 const Dashboard = () => {
-  // useEffect(() => {
-  //   async function teste() {
-  //     const response = await api.get('/test');
 
-  //     console.log('response: ', response);
-  //   }
+  const [registros, setRegistros] = useState('');
 
-  // }, [])
+  useEffect(() => {
+    async function getRegistros() {
+      const response = await api.get('registro');
+      setRegistros(response.data);
 
+      console.log(registros);
+    }
+
+    getRegistros();
+
+  }, [])
   
   const navigation = useNavigation();
 
   return (
     <Container>
       <View>
-
         <Header>
           <HeaderText>MEU IMC</HeaderText>
         </Header>
         
         <CenterScreen>
-          <Button 
-            navigate={'Pesoalvo'}
-            text={'CADASTRAR PESO-ALVO'}
+          <Button
             backgroundColor={'#26E472'}
-            fontSize={20}
-          />
-          
+          >
+            <ButtonText
+              fontSize={20}
+              onPress={() => navigation.navigate('Pesoalvo')}
+            >
+              CADASTRAR PESO-ALVO
+            </ButtonText>
+          </Button>          
           <CircleContainer>
             <Circle 
               borderColor={'#26E472'}
               sizeCircle={'147'}
               bottonText={'IMC'}
+              data={registros}
             />
             <Circle 
               borderColor={'#26C2E4'}
               sizeCircle={'147'}
               bottonText={'peso(kg)'}
+              data={registros}
             />
           </CircleContainer>
   
-          <Button 
-            navigate={'Imc'}
-            text={'CADASTRAR'}
+          <Button
             backgroundColor={'#26C2E4'}
-            fontSize={24}
-          />
+          >
+            <ButtonText
+              onPress={() => navigation.navigate('Imc')}
+              fontSize={24}
+            >
+              Cadastrar
+            </ButtonText>
+          </Button>
         </CenterScreen>
         
           
         <BottonScreen>
-            <RowImc />
-            <RowImc />
-            <RowImc />
-            <RowImc />
-            <RowImc />
+          {/* {registros.map(registro => (
+            <RowImc registro={registro}/>
+          ))} */}
         </BottonScreen>
       </View>
     </Container>

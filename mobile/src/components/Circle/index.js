@@ -9,6 +9,12 @@ import {
 
 const Circle = (props) => {
 
+  // if(props.data){
+  //   const dataSort = props.data
+  //   const peso = '8,9';
+  //   const altura = 
+  // }
+  
   const text = '8,9';
 
   return (

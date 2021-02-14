@@ -14,7 +14,7 @@ const AppRoutes = () => {
       screenOptions={{
         headerShown: false
       }}
-      initialRouteName="Imc"
+      // initialRouteName="Imc"
     >
       <App.Screen name="Dashboard" component={Dashboard} />
       <App.Screen name="Imc" component={Imc} />

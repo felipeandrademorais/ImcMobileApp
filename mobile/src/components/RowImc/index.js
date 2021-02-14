@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Text } from 'react-native';
 
 import Circle from '../Circle';
 import Button from '../Button';
+import api from '../../api';
 
 import { 
   Container,
@@ -11,7 +12,7 @@ import {
   TextBold
 } from './styles';
 
-const RowImc = () => {
+const RowImc = (props) => {
 
   return (
     <Container> 
@@ -22,9 +23,9 @@ const RowImc = () => {
       />
       
       <ContainerText>
-        <Text style={{fontSize:16}}><TextBold>Peso: </TextBold>20 kg</Text>
-        <Text style={{fontSize:16}}><TextBold>Altura: </TextBold>2(m)</Text>
-        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>11/12/2020</Text>
+        <Text style={{fontSize:16}}><TextBold>Peso: </TextBold>{props.registro.peso}</Text>
+        <Text style={{fontSize:16}}><TextBold>Altura: </TextBold>{props.registro.altura}</Text>
+        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>{props.registro.data}</Text>
       </ContainerText>
 
       <ContainerButton>
