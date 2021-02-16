@@ -29,7 +29,7 @@ const RowImc = (props) => {
 
     if(response.status){
       Alert.alert('Excluido com Sucesso');
-      navigation.navigate('Dashboard');
+      navigation.navigation('Dashboard', {destroy: true});
     }else{
       Alert.alert('Ocorreu um erro ao excluir, tente novamente.');
     }

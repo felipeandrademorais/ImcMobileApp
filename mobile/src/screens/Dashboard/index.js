@@ -19,7 +19,7 @@ import {
 } from './styles';
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
   const [registros, setRegistros] = useState('');
   const [imc, setImc] = useState('');
@@ -58,15 +58,13 @@ const Dashboard = () => {
     setTargetWeight(response.data.peso);
   }
 
-
   //Recupera registros do Banco de Dados
   useEffect(() => {
     navigation.addListener('focus', () => {
       getWeightheight();
       getTargetWeight();
     });
-  
-  }, []);
+  }, [props]);
 
   /**
   * Condição para exibir peso alvo

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, ScrollView, TextInput, Text, TouchableOpacity, Alert  } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, Alert  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
@@ -24,7 +24,7 @@ const Imc = (props) => {
 
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-  const [imc, setImc] = useState('');
+  const [imc, setImc] = useState(0);
   const [idEdit, setIdEdit] = useState(''); 
 
   const navigation = useNavigation();
@@ -45,7 +45,7 @@ const Imc = (props) => {
       });
     }
 
-    if(response.status === 201){
+    if(response.status === 201 || response.status === 200){
       Alert.alert('Salvo com Sucesso!');
       navigation.navigate('Dashboard');
     }else{
@@ -53,11 +53,10 @@ const Imc = (props) => {
     }
   }
 
+  //Pega os dados da rota
   useEffect(() => {
     async function getRegistros() {
       setIdEdit(props.route.params ? props.route.params.id : false);
-
-      console.log(idEdit);
 
       if(idEdit){
         setImc(props.route.params.imc);
@@ -69,6 +68,11 @@ const Imc = (props) => {
     getRegistros();
     
   }, []);
+
+  //Atualiza o imc após digitação do usuario;
+  useEffect(() => {
+    setImc((weight / Math.pow(height, 2)).toFixed(2));
+  }, [weight, height]);
 
   return (
     <Container>
