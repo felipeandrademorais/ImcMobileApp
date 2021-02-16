@@ -40,9 +40,17 @@ export const CircleContainer = styled.View `
   flex:1;
   flex-direction: row;
 
-  padding: 45px 0;
+  padding: 25px 0;
 `;
 
+export const TargetContainer = styled.View `
+  width: 70%;
+
+  flex-direction: row;
+  
+  justify-content: space-evenly;
+  align-items: center;
+`;
 
 export const Button = styled(RectButton)`
   background-color: ${props => props.backgroundColor};

@@ -1,6 +1,4 @@
-import React from 'react';
-import Svg, {Circle as SvgCircle} from 'react-native-svg';
-import { Text, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 import { 
   Container,
@@ -9,25 +7,44 @@ import {
 
 const Circle = (props) => {
 
-  // if(props.data){
-  //   const dataSort = props.data
-  //   const peso = '8,9';
-  //   const altura = 
-  // }
-  
-  const text = '8,9';
+  const [borderColor, setBorderColor] = useState(props.borderColor);
+
+  useEffect(() => {
+    function changeImcColor(){
+      const imc = parseFloat(props.value);
+
+      if(props.bottonText === 'IMC'){
+          if(imc < 16){ 
+            setBorderColor('#e42626');
+          }else if(imc > 16 && imc < 18.4){
+            setBorderColor('#ffff00');
+          }else if(imc > 18.5 && imc < 29.9){
+            setBorderColor('#26e472');
+          }else if(imc > 30 && imc < 39.9){
+            setBorderColor('#ffff00');
+          }else {
+            setBorderColor('#e42626');
+          }
+      }else{
+        setBorderColor(props.borderColor);
+      }
+    }
+
+    changeImcColor();
+
+  }, [props.value]);
 
   return (
     <Container 
       sizeCircle={props.sizeCircle}
-      borderColor={props.borderColor}
+      borderColor={borderColor}
       radius={props.sizeCircle/2}
     > 
       <CircleText
-        fontSize={props.sizeCircle/3}
+        fontSize={props.sizeCircle/3.4}
         fontColor={'#000000'}
       >
-      {text}
+      {props.value}
       </CircleText>
       <CircleText
         fontSize={props.sizeCircle/7}

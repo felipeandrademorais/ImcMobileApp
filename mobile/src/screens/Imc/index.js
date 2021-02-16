@@ -20,21 +20,55 @@ import {
 } from './styles';
 
 
-const Imc = () => {
+const Imc = (props) => {
 
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-
-  const handleSendData = async () => {
-    const response = await api.post('registro', {
-      "peso": weight, 
-      "altura": height
-    });
-  
-    console.log('response: ', response);
-  }
+  const [imc, setImc] = useState('');
+  const [idEdit, setIdEdit] = useState(''); 
 
   const navigation = useNavigation();
+
+  const handleSendData = async () => {
+    let id = idEdit ? idEdit : false;
+    let response;
+
+    if(id){
+      response = await api.put('registro/' + id, {
+        "peso": weight, 
+        "altura": height
+      });
+    }else {
+      response = await api.post('registro', {
+        "peso": weight, 
+        "altura": height
+      });
+    }
+
+    if(response.status === 201){
+      Alert.alert('Salvo com Sucesso!');
+      navigation.navigate('Dashboard');
+    }else{
+      Alert.alert('Ocorreu um erro ao salvar, tente novamente.');
+    }
+  }
+
+  useEffect(() => {
+    async function getRegistros() {
+      setIdEdit(props.route.params ? props.route.params.id : false);
+
+      console.log(idEdit);
+
+      if(idEdit){
+        setImc(props.route.params.imc);
+        setHeight(props.route.params.altura);
+        setWeight(props.route.params.peso);
+      }
+    }
+
+    getRegistros();
+    
+  }, []);
 
   return (
     <Container>
@@ -48,6 +82,7 @@ const Imc = () => {
               borderColor={'#26E472'}
               sizeCircle={'147'}
               bottonText={'IMC'}
+              value={imc}
             />
         </CircleContainer>
 
@@ -56,8 +91,7 @@ const Imc = () => {
             placeholder='Seu peso...'
             //keyboardType='numeric' 
             onChangeText={weight => setWeight(weight)}
-            value={weight}
-          />
+          >{weight}</InputText>
           <TextMeasure>(kg)</TextMeasure>
         </ContainerTextInput>
 
@@ -66,8 +100,7 @@ const Imc = () => {
             placeholder='Sua altura...'
             //keyboardType='numeric'
             onChangeText={height => setHeight(height)}
-            value={height}
-          />
+          >{height}</InputText>
           <TextMeasure>(m)</TextMeasure>
         </ContainerTextInput>
       </CenterScreen>

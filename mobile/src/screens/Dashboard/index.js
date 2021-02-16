@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, Alert } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
 import RowImc from '../../components/RowImc';
@@ -13,6 +13,7 @@ import {
   CenterScreen,
   BottonScreen,
   CircleContainer,
+  TargetContainer,
   Button,
   ButtonText
 } from './styles';
@@ -21,18 +22,86 @@ import {
 const Dashboard = () => {
 
   const [registros, setRegistros] = useState('');
-
-  useEffect(() => {
-    async function getRegistros() {
-      const response = await api.get('registro');
-      setRegistros(response.data);
-    }
-
-    getRegistros();
-
-  }, [])
-  
+  const [imc, setImc] = useState('');
+  const [weight, setWeight] = useState('');
+  const [targetWeight, setTargetWeight] = useState('');
   const navigation = useNavigation();
+
+  //Ordena os registros em ordem decrescente
+  function sortJsonReturn(json){
+    json.sort((a, b) =>{
+      if(a.id < b.id){
+        return 1;
+      }
+      if(a.id > b.id){
+        return -1;
+      }
+      return 0;
+    });
+
+    return json;
+  }
+
+  //Busca registro de peso e altura 
+  async function getWeightheight() {
+    const response = await api.get('registro');
+
+    //seta valor para cada state;
+    setRegistros(sortJsonReturn(response.data));
+    setImc((response.data[0].peso / Math.pow(response.data[0].altura, 2)).toFixed(2));
+    setWeight(response.data[0].peso);
+
+  }
+
+  async function getTargetWeight() {
+    const response = await api.get('peso-alvo');
+    setTargetWeight(response.data.peso);
+  }
+
+
+  //Recupera registros do Banco de Dados
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      getWeightheight();
+      getTargetWeight();
+    });
+  
+  }, []);
+
+  /**
+  * Condição para exibir peso alvo
+  * ou botão cadastrar peso alvo;
+  */
+
+  let targetWeightButton = '';
+
+  if(targetWeight == ''){
+
+    targetWeightButton = (
+        <Button backgroundColor={'#26E472'}>
+          <ButtonText
+            fontSize={20}
+            onPress={() => navigation.navigate('Pesoalvo')}
+          >
+            CADASTRAR PESO-ALVO
+          </ButtonText>
+        </Button>
+    );
+  } else {
+    targetWeightButton = (
+      <TargetContainer>
+        <Text style={{fontSize: 18}}>Peso Alvo: {targetWeight}</Text>
+        <Button backgroundColor={'#26C2E4'}>
+          <ButtonText
+            fontSize={14}
+            onPress={() => navigation.navigate('Pesoalvo', { targetWeight })}
+          >
+            Editar
+          </ButtonText>
+        </Button>
+      </TargetContainer>
+    );
+  }
 
   return (
     <Container>
@@ -42,28 +111,21 @@ const Dashboard = () => {
         </Header>
         
         <CenterScreen>
-          <Button
-            backgroundColor={'#26E472'}
-          >
-            <ButtonText
-              fontSize={20}
-              onPress={() => navigation.navigate('Pesoalvo')}
-            >
-              CADASTRAR PESO-ALVO
-            </ButtonText>
-          </Button>          
+         
+          { targetWeightButton }
+              
           <CircleContainer>
             <Circle 
               borderColor={'#26E472'}
               sizeCircle={'147'}
               bottonText={'IMC'}
-              data={registros}
+              value={imc}
             />
             <Circle 
               borderColor={'#26C2E4'}
               sizeCircle={'147'}
               bottonText={'peso(kg)'}
-              data={registros}
+              value={weight}
             />
           </CircleContainer>
   
@@ -81,7 +143,7 @@ const Dashboard = () => {
         
           
         <BottonScreen>
-          {registros.map(registro => {
+          {registros[0] && registros.map(registro => {
             return(
               <RowImc 
                 key={registro.id}

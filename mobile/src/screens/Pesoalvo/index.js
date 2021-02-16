@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TextInput, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../api';
@@ -18,18 +18,27 @@ import {
 } from './styles';
 
 
-const Imc = () => {
+const Imc = (props) => {
   
   const [weight, setWeight] = useState('');
   const navigation = useNavigation();
 
   const handleSendData = async () => {
-    const response = await api.post('peso-alvo', {
+    const response = await api.put('peso-alvo', {
       "peso": weight, 
     });
   
-    console.log('response: ', response);
+    if(response.status === 200){
+      Alert.alert('Salvo com Sucesso!');
+      navigation.navigate('Dashboard');
+    }else{
+      Alert.alert('Ocorreu um erro ao salvar, tente novamente.');
+    }
   }
+  
+  useEffect(() => {
+    setWeight(props.route.params ? props.route.params.targetWeight : '');
+  }, []);
 
   return (
     <Container>
