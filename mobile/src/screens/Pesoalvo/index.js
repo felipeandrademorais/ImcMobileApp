@@ -50,6 +50,8 @@ const Imc = (props) => {
         <ContainerTextInput>
           <InputText 
             placeholder='Peso alvo...'
+            keyboardType='decimal-pad' 
+            autoCapitalize="none"
             onChangeText={weight => setWeight(weight)}
             value={weight}
           />

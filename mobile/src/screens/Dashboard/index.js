@@ -48,9 +48,15 @@ const Dashboard = (props) => {
 
     //seta valor para cada state;
     setRegistros(sortJsonReturn(response.data));
-    setImc((response.data[0].peso / Math.pow(response.data[0].altura, 2)).toFixed(2));
-    setWeight(response.data[0].peso);
 
+    if(response.data != ''){
+      setImc((response.data[0].peso / Math.pow(response.data[0].altura, 2)).toFixed(2));
+      setWeight(response.data[0].peso);
+    }else{
+      setImc(0);
+      setWeight(0);
+    }
+  
   }
 
   async function getTargetWeight() {

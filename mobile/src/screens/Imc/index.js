@@ -24,7 +24,7 @@ const Imc = (props) => {
 
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
-  const [imc, setImc] = useState(0);
+  const [imc, setImc] = useState('');
   const [idEdit, setIdEdit] = useState(''); 
 
   const navigation = useNavigation();
@@ -71,7 +71,11 @@ const Imc = (props) => {
 
   //Atualiza o imc após digitação do usuario;
   useEffect(() => {
-    setImc((weight / Math.pow(height, 2)).toFixed(2));
+    if(weight != '' && height != ''){
+      setImc((weight / Math.pow(height, 2)).toFixed(2));
+    }else{
+      setImc(0);
+    }
   }, [weight, height]);
 
   return (
@@ -93,7 +97,8 @@ const Imc = (props) => {
         <ContainerTextInput>
           <InputText 
             placeholder='Seu peso...'
-            //keyboardType='numeric' 
+            keyboardType='decimal-pad' 
+            autoCapitalize="none"
             onChangeText={weight => setWeight(weight)}
           >{weight}</InputText>
           <TextMeasure>(kg)</TextMeasure>
@@ -102,7 +107,8 @@ const Imc = (props) => {
         <ContainerTextInput>
           <InputText 
             placeholder='Sua altura...'
-            //keyboardType='numeric'
+            keyboardType='decimal-pad'
+            autoCapitalize="none"
             onChangeText={height => setHeight(height)}
           >{height}</InputText>
           <TextMeasure>(m)</TextMeasure>
