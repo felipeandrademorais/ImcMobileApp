@@ -7,8 +7,6 @@ import api from '../../api';
 
 import { 
   Container,
-  Header,
-  HeaderText,
   CenterScreen,
   BottonScreen,
   CircleContainer,
@@ -56,9 +54,10 @@ const Imc = (props) => {
   //Pega os dados da rota
   useEffect(() => {
     async function getRegistros() {
-      setIdEdit(props.route.params ? props.route.params.id : false);
+    const params = props.route.params;
 
-      if(idEdit){
+    if(params){
+        setIdEdit(props.route.params.id);
         setImc(props.route.params.imc);
         setHeight(props.route.params.altura);
         setWeight(props.route.params.peso);
@@ -80,10 +79,6 @@ const Imc = (props) => {
 
   return (
     <Container>
-      <Header>
-        <HeaderText>IMC</HeaderText>
-      </Header>
-
       <CenterScreen>
         <CircleContainer>
             <Circle 

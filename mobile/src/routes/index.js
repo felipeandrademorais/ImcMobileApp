@@ -9,16 +9,26 @@ const App = createStackNavigator();
 
 const AppRoutes = () => {
 
+  const headerStyle = {
+    headerStyle: {
+      backgroundColor: '#26C2E4',
+    },
+    headerTitleStyle: {
+      alignSelf: 'center'
+    },
+    headerTintColor: '#fff'
+  }; 
+
+
   return(
     <App.Navigator
       screenOptions={{
-        headerShown: false
+        //headerShown: false
       }}
-      // initialRouteName="Imc"
     >
-      <App.Screen name="Dashboard" component={Dashboard} />
-      <App.Screen name="Imc" component={Imc} />
-      <App.Screen name="Pesoalvo" component={Pesoalvo} />
+      <App.Screen name="Dashboard" component={Dashboard} options={{title: 'MEU IMC', ... headerStyle}}/>
+      <App.Screen name="Imc" component={Imc} options={{title: 'IMC', ... headerStyle}}/>
+      <App.Screen name="Pesoalvo" component={Pesoalvo} options={{title: 'PESO-ALVO', ... headerStyle}}/>
     </App.Navigator>
   );
 }

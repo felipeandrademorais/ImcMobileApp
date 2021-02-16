@@ -1,8 +1,21 @@
 {
   "peso-alvo": {
-    "peso": ""
+    "peso": "13"
   },
-  "registro": [],
+  "registro": [
+    {
+      "peso": "38",
+      "altura": "1.50",
+      "data": 1613446636624,
+      "id": 3
+    },
+    {
+      "peso": "120",
+      "altura": "1.99",
+      "data": 1613446873540,
+      "id": 4
+    }
+  ],
   "test": {
     "message": "ok"
   }

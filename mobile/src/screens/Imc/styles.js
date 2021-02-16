@@ -7,19 +7,6 @@ export const Container = styled.View`
   flex-direction: column;
 `;
 
-export const Header = styled.View `
-  width: 100%;
-  background-color: #26C2E4;
-`;
-
-export const HeaderText = styled.Text `
-  width: 100%;
-  font-size: 24px; 
-  text-align: center;
-  margin: 14px 0;
-  color: #FFFFFF;
-`;
-
 export const CenterScreen = styled.View `
   width: 100%;
   padding: 30px;

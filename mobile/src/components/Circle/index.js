@@ -41,7 +41,7 @@ const Circle = (props) => {
       radius={props.sizeCircle/2}
     > 
       <CircleText
-        fontSize={props.sizeCircle/3.4}
+        fontSize={props.sizeCircle/3.5}
         fontColor={'#000000'}
       >
       {props.value}

@@ -8,8 +8,6 @@ import api from '../../api';
 
 import { 
   Container,
-  Header,
-  HeaderText,
   CenterScreen,
   BottonScreen,
   CircleContainer,
@@ -66,11 +64,18 @@ const Dashboard = (props) => {
 
   //Recupera registros do Banco de Dados
   useEffect(() => {
+    console.log('useEffect');
     navigation.addListener('focus', () => {
       getWeightheight();
       getTargetWeight();
     });
-  }, [props]);
+  }, []);
+
+  navigation.addListener('state', () => {
+    console.log('state');
+    getWeightheight();
+    getTargetWeight();
+  });
 
   /**
   * Condição para exibir peso alvo
@@ -109,11 +114,7 @@ const Dashboard = (props) => {
 
   return (
     <Container>
-      <View>
-        <Header>
-          <HeaderText>MEU IMC</HeaderText>
-        </Header>
-        
+      <View>        
         <CenterScreen>
          
           { targetWeightButton }

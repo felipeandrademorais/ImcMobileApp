@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance} from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Circle from '../Circle';
@@ -20,16 +20,15 @@ import {
 const RowImc = (props) => {
 
   let imc = ((props.registro.peso / Math.pow(props.registro.altura, 2)).toFixed(2));
+  
   const navigation = useNavigation();
 
   const destroyRegister = async () => {
     const response = await api.delete('registro/' + props.registro.id);
 
-    console.log(response.status);
-
-    if(response.status){
+    if(response.status === 200){
       Alert.alert('Excluido com Sucesso');
-      navigation.navigation('Dashboard', {destroy: true});
+      navigation.navigate('Dashboard', {destroy: true});
     }else{
       Alert.alert('Ocorreu um erro ao excluir, tente novamente.');
     }

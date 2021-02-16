@@ -6,8 +6,6 @@ import api from '../../api';
 
 import { 
   Container,
-  Header,
-  HeaderText,
   CenterScreen,
   BottonScreen,
   ContainerTextInput,
@@ -42,10 +40,6 @@ const Imc = (props) => {
 
   return (
     <Container>
-      <Header>
-        <HeaderText>IMC</HeaderText>
-      </Header>
-
       <CenterScreen>
         <ContainerTextInput>
           <InputText 
