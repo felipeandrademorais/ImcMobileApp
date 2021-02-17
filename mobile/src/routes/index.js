@@ -21,11 +21,7 @@ const AppRoutes = () => {
 
 
   return(
-    <App.Navigator
-      screenOptions={{
-        //headerShown: false
-      }}
-    >
+    <App.Navigator>
       <App.Screen name="Dashboard" component={Dashboard} options={{title: 'MEU IMC', ... headerStyle}}/>
       <App.Screen name="Imc" component={Imc} options={{title: 'IMC', ... headerStyle}}/>
       <App.Screen name="Pesoalvo" component={Pesoalvo} options={{title: 'PESO-ALVO', ... headerStyle}}/>

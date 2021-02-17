@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { formatDistance, format} from 'date-fns';
+import { format} from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Circle from '../Circle';
 import api from '../../api';
+import {setDeleteTrue, useDeleteRow, setDeleteFalse} from '../../context/ListContext';
 
 import { 
   Container,
@@ -26,7 +27,7 @@ const RowImc = (props) => {
 
   const destroyRegister = async () => {
     const response = await api.delete('registro/' + id);
-
+  
     if(response.status === 200){
       Alert.alert('Excluido com Sucesso');
       navigation.navigate('Dashboard', {destroy: true});

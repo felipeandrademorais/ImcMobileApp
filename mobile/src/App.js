@@ -3,12 +3,15 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AppRoutes from './routes';
+import {ListContext} from './context/ListContext';
 
 const App = () => {
 
   return (
     <NavigationContainer>
-      <AppRoutes />
+      <ListContext>
+        <AppRoutes />
+      </ListContext>
     </NavigationContainer>
   );
 };

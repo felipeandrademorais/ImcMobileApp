@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, FlatList, Alert } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState} from 'react';
+import { Text, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
 import RowImc from '../../components/RowImc';
@@ -24,6 +24,7 @@ const Dashboard = (props) => {
   const [imc, setImc] = useState('');
   const [weight, setWeight] = useState('');
   const [targetWeight, setTargetWeight] = useState('');
+
   const navigation = useNavigation();
 
   //Ordena os registros em ordem decrescente
@@ -60,8 +61,6 @@ const Dashboard = (props) => {
         });
       });
 
-      console.log(responseArray);
-
       //seta valor para cada state;
       setRegistros(responseArray);
       setImc((response.data[0].peso / Math.pow(response.data[0].altura, 2)).toFixed(2));
@@ -84,7 +83,7 @@ const Dashboard = (props) => {
       getWeightheight();
       getTargetWeight();
     });
-  }, []);
+  });
 
   /**
   * Condição para exibir peso alvo
@@ -156,15 +155,15 @@ const Dashboard = (props) => {
         
         <BottonScreen>
           <RowImcList 
-              data={registros}
-              keyExtractor={(obj) => obj.id.toString()}
-              renderItem={(obj) => (
-                <RowImc 
-                  key={obj.item.id}
-                  registro={obj.item} 
-                />
-              )}
-            />
+            data={registros}
+            keyExtractor={(obj) => obj.id.toString()}
+            renderItem={(obj) => (
+              <RowImc 
+                key={obj.item.id}
+                registro={obj.item} 
+              />
+            )}
+          />
         </BottonScreen>
     </Container>
   );
