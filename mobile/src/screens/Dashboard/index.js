@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, FlatList, Alert } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import Circle from '../../components/Circle';
@@ -13,7 +13,8 @@ import {
   CircleContainer,
   TargetContainer,
   Button,
-  ButtonText
+  ButtonText,
+  RowImcList
 } from './styles';
 
 
@@ -44,10 +45,25 @@ const Dashboard = (props) => {
   async function getWeightheight() {
     const response = await api.get('registro');
 
-    //seta valor para cada state;
-    setRegistros(sortJsonReturn(response.data));
-
     if(response.data != ''){
+      //Ordena os resultados por ordem de id
+      const responseSorted = sortJsonReturn(response.data)
+      const responseArray = [];
+
+      //Converte de Objeto para Array
+      responseSorted.forEach((data) => {
+        responseArray.push({
+          data: data.data,
+          altura: data.altura,
+          peso: data.peso,
+          id: data.id
+        });
+      });
+
+      console.log(responseArray);
+
+      //seta valor para cada state;
+      setRegistros(responseArray);
       setImc((response.data[0].peso / Math.pow(response.data[0].altura, 2)).toFixed(2));
       setWeight(response.data[0].peso);
     }else{
@@ -69,14 +85,6 @@ const Dashboard = (props) => {
       getTargetWeight();
     });
   }, []);
-
-  // if(props.route.params != undefined && props.route.params.destroy) {
-  //   //Atualiza a tela quando é clicado em excluir
-  //   navigation.addListener('state', () => {
-  //     getWeightheight();
-  //     getTargetWeight();
-  //   });
-  // }
 
   /**
   * Condição para exibir peso alvo
@@ -114,8 +122,7 @@ const Dashboard = (props) => {
   }
 
   return (
-    <Container>
-      <View>        
+    <Container>    
         <CenterScreen>
          
           { targetWeightButton }
@@ -147,18 +154,18 @@ const Dashboard = (props) => {
           </Button>
         </CenterScreen>
         
-          
         <BottonScreen>
-          {registros[0] && registros.map(registro => {
-            return(
-              <RowImc 
-                key={registro.id}
-                registro={registro} 
-              />
-            )
-          })}
+          <RowImcList 
+              data={registros}
+              keyExtractor={(obj) => obj.id.toString()}
+              renderItem={(obj) => (
+                <RowImc 
+                  key={obj.item.id}
+                  registro={obj.item} 
+                />
+              )}
+            />
         </BottonScreen>
-      </View>
     </Container>
   );
 };

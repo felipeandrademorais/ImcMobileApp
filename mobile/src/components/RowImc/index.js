@@ -19,12 +19,13 @@ import {
 
 const RowImc = (props) => {
 
-  let imc = ((props.registro.peso / Math.pow(props.registro.altura, 2)).toFixed(2));
-  
+  const { peso, altura, id, data } = props.registro;
   const navigation = useNavigation();
+  
+  let imc = ((peso / Math.pow(altura, 2)).toFixed(2));
 
   const destroyRegister = async () => {
-    const response = await api.delete('registro/' + props.registro.id);
+    const response = await api.delete('registro/' + id);
 
     if(response.status === 200){
       Alert.alert('Excluido com Sucesso');
@@ -44,9 +45,9 @@ const RowImc = (props) => {
       />
       
       <ContainerText>
-        <Text style={{fontSize:16}}><TextBold>Peso: </TextBold>{props.registro.peso}</Text>
-        <Text style={{fontSize:16}}><TextBold>Altura: </TextBold>{props.registro.altura}</Text>
-        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>{format(props.registro.data, "dd/LL/yyyy HH:mm",{locale: pt})}</Text>
+        <Text style={{fontSize:16}}><TextBold>Peso: </TextBold>{peso}</Text>
+        <Text style={{fontSize:16}}><TextBold>Altura: </TextBold>{altura}</Text>
+        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>{format(data, "dd/LL/yyyy HH:mm",{locale: pt})}</Text>
       </ContainerText>
 
       <ContainerButton>
@@ -56,10 +57,10 @@ const RowImc = (props) => {
             <ButtonText
               fontSize={14}
               onPress={() => navigation.navigate('Imc', {
-                id: props.registro.id,
+                id: id,
                 imc: imc,
-                peso: props.registro.peso,
-                altura: props.registro.altura
+                peso: peso,
+                altura: altura
               })}
             >
               EDITAR

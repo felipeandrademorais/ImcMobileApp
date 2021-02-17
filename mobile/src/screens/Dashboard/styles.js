@@ -1,15 +1,14 @@
 import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   background-color: #E5E5E5;
   flex: 1;
   flex-direction: column;
 `;
 
 export const CenterScreen = styled.View `
-  width: 100%;
-  height:376px;
+  flex:1;
   padding: 30px;
 
   justify-content: center;
@@ -17,10 +16,11 @@ export const CenterScreen = styled.View `
 `;
 
 export const BottonScreen = styled.View `
-  width: 100%;
+ flex:1;
+`;
 
-  justify-content: center;
-  align-items: center; 
+export const RowImcList = styled.FlatList `
+  flex:1;
 `;
 
 export const CircleContainer = styled.View `
@@ -55,3 +55,4 @@ export const ButtonText = styled.Text `
   color: #fff;
   font-size: ${props => props.fontSize}px;
 `;
+

@@ -17,11 +17,8 @@ export const ContainerText = styled.View`
 
 export const ContainerButton = styled.View `
   flex-direction: column;
-
   padding: 0 4px;
-
   justify-content: space-around;
-
 `;
 
 export const TextBold = styled.Text `
