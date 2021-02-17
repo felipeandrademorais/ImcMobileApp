@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { formatDistance} from 'date-fns';
+import { formatDistance, format} from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Circle from '../Circle';
@@ -46,7 +46,7 @@ const RowImc = (props) => {
       <ContainerText>
         <Text style={{fontSize:16}}><TextBold>Peso: </TextBold>{props.registro.peso}</Text>
         <Text style={{fontSize:16}}><TextBold>Altura: </TextBold>{props.registro.altura}</Text>
-        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>{formatDistance(props.registro.data, new Date(), {locale: pt})}</Text>
+        <Text style={{fontSize:16}}><TextBold>Data: </TextBold>{format(props.registro.data, "dd/LL/yyyy HH:mm",{locale: pt})}</Text>
       </ContainerText>
 
       <ContainerButton>

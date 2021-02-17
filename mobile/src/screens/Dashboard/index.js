@@ -70,13 +70,13 @@ const Dashboard = (props) => {
     });
   }, []);
 
-  if(props.route.params != undefined){
-    //Atualiza a tela quando é clicado em excluir
-    navigation.addListener('state', () => {
-      getWeightheight();
-      getTargetWeight();
-    });
-  }
+  // if(props.route.params != undefined && props.route.params.destroy) {
+  //   //Atualiza a tela quando é clicado em excluir
+  //   navigation.addListener('state', () => {
+  //     getWeightheight();
+  //     getTargetWeight();
+  //   });
+  // }
 
   /**
   * Condição para exibir peso alvo
