@@ -11,7 +11,7 @@ sobre React;
 
 # Passos para testar
 
-**PASSO 1 - Iniciar a api
+**PASSO 1 - Iniciar a api**
 
 Acessar a pasta api e executar os comandos abaixo:
 
@@ -22,7 +22,7 @@ yarn start
 ```
 
 
-**PASSO 2 - Iniciando aplicação Mobile
+**PASSO 2 - Iniciando aplicação Mobile**
 
 Acessar pasta mobile, e executar o comando abaixo:
 
