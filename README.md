@@ -40,4 +40,4 @@ apartir desse momento a aplicação será iniciada e passará a consumir a API q
 
 # Melhorias
 
-[] Implementar context api para exclusão dos itens;
+[-] Implementar context api para exclusão dos itens;
