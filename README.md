@@ -34,8 +34,7 @@ apartir desse momento a aplicação será iniciada e passará a consumir a API q
 
 # Demonstração
 
-[Em Breve]
-
+[Link Video Demonstrativo](https://www.linkedin.com/feed/update/urn:li:activity:6773626803853553664/)
 
 
 # Melhorias
